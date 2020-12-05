@@ -40,5 +40,9 @@ file(GLOB auto_sources day_*/**.cpp)
 add_executable(tests ${auto_sources})
 target_link_libraries(tests gtest_main)
 
+FILE(GLOB resource_files resources/**.txt)
+FILE(COPY ${resource_files} DESTINATION "${CMAKE_BINARY_DIR}")
+
 include(GoogleTest)
 gtest_discover_tests(tests)
+
