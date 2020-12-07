@@ -3,8 +3,9 @@
 #include <fstream>
 
 #include "gtest/gtest.h"
+#include "benchmark/benchmark.h"
 
-std::optional<std::pair<int, int>> find_sum_pair(const std::vector<int> &nums, int desired_num) {
+std::optional<std::pair<int, int>> find_sum_pair_brute_force(std::vector<int> &nums, int desired_num) {
     // Do dumb way
     for( int x = 0; x < nums.size(); ++x) {
         for (int y = 0; y < nums.size(); ++y) {
@@ -16,6 +17,26 @@ std::optional<std::pair<int, int>> find_sum_pair(const std::vector<int> &nums, i
     }
     return {};
 }
+
+std::optional<std::pair<int, int>> find_sum_pair(std::vector<int> &nums, int desired_num) {
+    int left = 0;
+    int right = nums.size() - 1;
+
+    // Sort the array.  Then we can just bring our window sizes inward if we are greater or less than our target.
+    std::sort(nums.begin(), nums.end());
+    while(left != right) {
+        int sum = nums[left] + nums[right];
+        if(sum == desired_num) {
+            return std::make_pair(nums[left], nums[right]);
+        } else if (sum < desired_num ) {
+            left++;
+        } else {
+            right--;
+        }
+    }
+    return {};
+}
+
 
 std::optional<std::tuple<int, int, int>> find_sum_triplet(const std::vector<int> &nums, int desired_num) {
     // Do dumb way
@@ -73,3 +94,18 @@ TEST(Day01, part_2) {
     EXPECT_EQ(pair, std::make_tuple(1081, 315, 624));
     EXPECT_EQ(std::get<0>(pair) * std::get<1>(pair) * std::get<2>(pair), 212481360);
 }
+
+static void BM_BruteForce(benchmark::State& state) {
+    for (auto _ : state) {
+        auto nums = read_file("day01_part01.txt");
+        auto result = find_sum_pair_brute_force(nums, 2020);
+    }
+}
+static void BM_Scan(benchmark::State& state) {
+    for (auto _ : state) {
+        auto nums = read_file("day01_part01.txt");
+        auto result = find_sum_pair(nums, 2020);
+    }
+}
+BENCHMARK(BM_BruteForce);
+BENCHMARK(BM_Scan);
