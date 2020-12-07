@@ -5,6 +5,7 @@
 #include "gtest/gtest.h"
 #include "benchmark/benchmark.h"
 
+// Keep around brute force method for looking at Benchmarking
 std::optional<std::pair<int, int>> find_sum_pair_brute_force(std::vector<int> &nums, int desired_num) {
     // Do dumb way
     for( int x = 0; x < nums.size(); ++x) {
@@ -38,6 +39,7 @@ std::optional<std::pair<int, int>> find_sum_pair(std::vector<int> &nums, int des
 }
 
 
+// TODO: Do this better, implement similar to scan method above.
 std::optional<std::tuple<int, int, int>> find_sum_triplet(const std::vector<int> &nums, int desired_num) {
     // Do dumb way
     for( int x = 0; x < nums.size(); ++x) {
