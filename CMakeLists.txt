@@ -24,6 +24,7 @@ enable_testing()
 file(GLOB auto_sources day_*/**.cpp)
 add_executable(tests ${auto_sources})
 target_link_libraries(tests gtest_main ${CONAN_LIBS})
+target_compile_options(tests PRIVATE -Werror -Wall -Wextra)
 add_executable(benchmarks ${auto_sources} benchmark.cpp)
 target_link_libraries(benchmarks ${CONAN_LIBS})
 

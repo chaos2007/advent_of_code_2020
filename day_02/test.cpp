@@ -12,7 +12,7 @@ struct PasswordConfig {
 
 bool is_valid_password(const PasswordConfig &passwordConfig) {
   auto &password = passwordConfig.password;
-  size_t count =
+  int count =
       std::count(password.begin(), password.end(), passwordConfig.character);
   return (count >= passwordConfig.min && count <= passwordConfig.max);
 }

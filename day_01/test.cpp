@@ -9,8 +9,8 @@
 std::optional<std::pair<int, int>> find_sum_pair_brute_force(
     std::vector<int> &nums, int desired_num) {
   // Do dumb way
-  for (int x = 0; x < nums.size(); ++x) {
-    for (int y = 0; y < nums.size(); ++y) {
+  for (size_t x = 0; x < nums.size(); ++x) {
+    for (size_t y = 0; y < nums.size(); ++y) {
       if (x == y) continue;
       if (nums[x] + nums[y] == desired_num) {
         return std::make_pair(std::min(nums[x], nums[y]),
@@ -46,9 +46,9 @@ std::optional<std::pair<int, int>> find_sum_pair(std::vector<int> &nums,
 std::optional<std::tuple<int, int, int>> find_sum_triplet(
     const std::vector<int> &nums, int desired_num) {
   // Do dumb way
-  for (int x = 0; x < nums.size(); ++x) {
-    for (int y = 0; y < nums.size(); ++y) {
-      for (int z = 0; z < nums.size(); ++z) {
+  for (size_t x = 0; x < nums.size(); ++x) {
+    for (size_t y = 0; y < nums.size(); ++y) {
+      for (size_t z = 0; z < nums.size(); ++z) {
         if (x == y || y == z || x == z) continue;
         if (nums[x] + nums[y] + nums[z] == desired_num) {
           return std::make_tuple(nums[x], nums[y], nums[z]);
@@ -106,13 +106,13 @@ TEST(Day01, part_2) {
 static void BM_BruteForce(benchmark::State &state) {
   for (auto _ : state) {
     auto nums = read_file("day01_part01.txt");
-    auto result = find_sum_pair_brute_force(nums, 2020);
+    find_sum_pair_brute_force(nums, 2020);
   }
 }
 static void BM_Scan(benchmark::State &state) {
   for (auto _ : state) {
     auto nums = read_file("day01_part01.txt");
-    auto result = find_sum_pair(nums, 2020);
+    find_sum_pair(nums, 2020);
   }
 }
 BENCHMARK(BM_BruteForce);
