@@ -70,5 +70,5 @@ TEST(Day05, Part02) {
     if(seat_num != pass.get_seat_id()) break;
     seat_num++;
   }
-  EXPECT_EQ(seat_num, 0u);
+  EXPECT_EQ(seat_num, 599u);
 }
