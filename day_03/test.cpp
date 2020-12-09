@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <fstream>
+#include <numeric>
 
 int get_num_trees_hit(std::string file_name, int right, int down) {
   std::ifstream file(file_name);
@@ -17,7 +18,7 @@ int get_num_trees_hit(std::string file_name, int right, int down) {
       current_column = (current_column + right) % line.size();
     }
     current_row++;
-    if(current_row == down) current_row = 0;
+    if (current_row == down) current_row = 0;
   }
   return num_trees_hit;
 }
@@ -36,12 +37,12 @@ TEST(Day03, variable_slopes) {
   EXPECT_EQ(get_num_trees_hit("day03_sample.txt", 1, 2), 2);
 }
 TEST(Day03, part_02) {
-  std::vector<std::pair<int, int>> 
-  long int multiply = 1;
-  multiply *= get_num_trees_hit("day03_part01.txt", 1, 1);
-  multiply *= get_num_trees_hit("day03_part01.txt", 3, 1);
-  multiply *= get_num_trees_hit("day03_part01.txt", 5, 1);
-  multiply *= get_num_trees_hit("day03_part01.txt", 7, 1);
-  multiply *= get_num_trees_hit("day03_part01.txt", 1, 2);
+  using Slope = std::pair<int, int>;
+  std::vector<Slope> slopes = {{1, 1}, {3, 1}, {5, 1}, {7, 1}, {1, 2}};
+  long int multiply = std::accumulate(
+      slopes.begin(), slopes.end(), 1l, [](long int accu, Slope &slope) {
+        return accu *
+               get_num_trees_hit("day03_part01.txt", slope.first, slope.second);
+      });
   EXPECT_EQ(multiply, 9709761600);
 }
