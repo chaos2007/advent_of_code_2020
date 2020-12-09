@@ -36,6 +36,7 @@ TEST(Day03, variable_slopes) {
   EXPECT_EQ(get_num_trees_hit("day03_sample.txt", 1, 2), 2);
 }
 TEST(Day03, part_02) {
+  std::vector<std::pair<int, int>> 
   long int multiply = 1;
   multiply *= get_num_trees_hit("day03_part01.txt", 1, 1);
   multiply *= get_num_trees_hit("day03_part01.txt", 3, 1);
